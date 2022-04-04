@@ -14,3 +14,8 @@ https://en.wikipedia.org/wiki/Edgar_Anderson
 https://www.youtube.com/watch?v=hd1W4CyPX58&t=253s&ab_channel=DataSchool
 https://www.youtube.com/watch?v=pTjsr_0YWas&ab_channel=HackersRealm
 https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+https://campus.datacamp.com/courses/data-manipulation-with-pandas/aggregating-dataframes?ex=11
+
+1. Summary 
+https://eldoyle.github.io/PythonIntro/08-ReadingandWritingTextFiles/
+
