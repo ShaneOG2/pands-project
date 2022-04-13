@@ -14,9 +14,6 @@ df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and 
 #print(df.info()) # Prints info about df
 #print(df.shape) # Prints shape of df
 #print(df.describe()) # Prints a description of df 
-#
-#print(df.values) # Prints values of df 
-#print(df.columns) # Prints collumns of df
 
 #filename = "summary.txt"
 
@@ -29,5 +26,16 @@ df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and 
 
 #summary.close() # Close the file when we’re done
 
-SepalBySpecies = df.groupby("Species")["SepalLengthCm","SepalWidthCm"].agg([min, max, np.mean, np.median])
-#print(SepalBySpecies)
+SepalLengthBySpecies = df.groupby("Species")["SepalLengthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
+print("Sepal Length\n", SepalLengthBySpecies, "\n")
+
+SepalWidthBySpecies = df.groupby("Species")["SepalWidthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
+print("Sepal Width\n", SepalWidthBySpecies, "\n")
+
+PetalLengthBySpecies = df.groupby("Species")["PetalLengthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
+print("Petal Length\n", PetalLengthBySpecies, "\n")
+
+PetalWidthBySpecies = df.groupby("Species")["PetalWidthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
+print("Petal Width\n", PetalWidthBySpecies, "\n")
+
+#print(df)

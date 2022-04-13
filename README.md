@@ -8,6 +8,8 @@ The dataset we will be working on is the famous Iris dataset. In 1936, an Americ
 
 For each Iris, he measured it's Sepal Length (cm), Sepal Width (cm), Petal Length (cm), Petal Width (cm) and it's species (Setosa, Versicolor or Virginica). 
 
+Objective: Classify a given flower in to one of three categories.  
+
 References 
 https://en.wikipedia.org/wiki/Iris_flower_data_set
 https://en.wikipedia.org/wiki/Edgar_Anderson

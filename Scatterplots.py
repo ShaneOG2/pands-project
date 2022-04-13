@@ -20,3 +20,7 @@ def scatterplotDistribution():
     # right: you can give other arguments with plot_kws.
     sns.pairplot(df, kind="scatter", hue="Species", plot_kws=dict(s=80, edgecolor="white", linewidth=2.5))
     plt.show()
+
+    # https://python-graph-gallery.com/111-custom-correlogram
+
+scatterplotDistribution()
