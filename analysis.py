@@ -17,25 +17,28 @@ def summaryFile():
 
     head = df.head() 
     shape = df.shape 
-    info = df.info() 
+    datatypes = df.dtypes
+    nullcounts = df.isnull().sum().sum()
     numberOfSpecies = df["Species"].value_counts()
 
     description = df.describe().round(1) 
     
-
     SepalLengthBySpecies = df.groupby("Species")["SepalLengthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
     SepalWidthBySpecies = df.groupby("Species")["SepalWidthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
     PetalLengthBySpecies = df.groupby("Species")["PetalLengthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
     PetalWidthBySpecies = df.groupby("Species")["PetalWidthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
 
+# Opens text file named summary.txt to write to as f
     with open("Summary.txt", "w") as f:
-            
+        
+        # Writes to Summary.txt using variable above and converting them to strings using ste
         f.write(("Data Summary\n\n"))
         f.write(("First 6 rows of our data:\n\n")+(str(head)+('\n\n')))
         f.write(("Number of rows and collums:\n\n")+(str(shape)+('\n\n')))
-        f.write(("Data types for each variable:\n\n")+(str(info)+('\n\n')))
+        f.write(("Data types for each variable:\n\n")+(str(datatypes))+('\n\n'))
+        f.write(("Null counts:\n\n")+(str(nullcounts))+('\n\n'))
         f.write(("Number of species types:\n\n")+(str(numberOfSpecies)+('\n\n')))
-        
+
         f.write(("Overview of statistics:\n\n")+(str(description)+('\n\n')))
 
         f.write(("Sepal Length:\n\n")+(str(SepalLengthBySpecies)+('\n\n')))
@@ -87,9 +90,9 @@ def pairPlots():
     plt.show()
 
 ###### Function calls
-#summaryFile()
+summaryFile()
 #plotHistograms()
-plotScatterplots()
+#plotScatterplots()
 #pairPlots()
 
 
