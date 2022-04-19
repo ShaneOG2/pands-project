@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 
 import seaborn as sns
-import csv
 
 ##### Importing data into dataframe
 
@@ -16,11 +15,13 @@ df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and 
 
 def summaryFile():
 
-    head = df.head() # First 6 rows
-    shape = df.shape # Number of rows and collumns
-    info = df.info() # Information of df 
-    description = df.describe().round(1) 
+    head = df.head() 
+    shape = df.shape 
+    info = df.info() 
     numberOfSpecies = df["Species"].value_counts()
+
+    description = df.describe().round(1) 
+    
 
     SepalLengthBySpecies = df.groupby("Species")["SepalLengthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
     SepalWidthBySpecies = df.groupby("Species")["SepalWidthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
@@ -33,8 +34,10 @@ def summaryFile():
         f.write(("First 6 rows of our data:\n\n")+(str(head)+('\n\n')))
         f.write(("Number of rows and collums:\n\n")+(str(shape)+('\n\n')))
         f.write(("Data types for each variable:\n\n")+(str(info)+('\n\n')))
-        f.write(("Overview of statistics:\n\n")+(str(description)+('\n\n')))
         f.write(("Number of species types:\n\n")+(str(numberOfSpecies)+('\n\n')))
+        
+        f.write(("Overview of statistics:\n\n")+(str(description)+('\n\n')))
+
         f.write(("Sepal Length:\n\n")+(str(SepalLengthBySpecies)+('\n\n')))
         f.write(("Sepal Width:\n\n")+(str(SepalWidthBySpecies)+('\n\n')))
         f.write(("Petal Length:\n\n")+(str(PetalLengthBySpecies)+('\n\n')))
