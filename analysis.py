@@ -18,7 +18,7 @@ def summaryFile():
     head = df.head() 
     shape = df.shape 
     datatypes = df.dtypes
-    nullcounts = df.isnull().sum().sum()
+    nullcounts = df.isnull().sum()
     numberOfSpecies = df["Species"].value_counts()
 
     description = df.describe().round(1) 
@@ -105,5 +105,5 @@ def plotBoxPlots():
 #plotHistograms()
 #plotScatterplots()
 #pairPlots()
-plotBoxPlots()
+#plotBoxPlots()
 

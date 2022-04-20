@@ -24,7 +24,12 @@ dtype: object
 
 Null counts:
 
-0
+SepalLengthCm    0
+SepalWidthCm     0
+PetalLengthCm    0
+PetalWidthCm     0
+Species          0
+dtype: int64
 
 Number of species types:
 
