@@ -89,10 +89,21 @@ def pairPlots():
     sns.pairplot(df, kind="scatter", hue="Species", markers=["o", "s", "D"], palette="Set2")
     plt.show()
 
+def plotBoxPlots():
+    sns.set(style="darkgrid")
+
+    fig, axs = plt.subplots(2, 2, figsize=(12, 12))
+
+    sns.boxplot(data=df, x="Species", y="SepalLengthCm", ax=axs[0, 0], palette="Set2")
+    sns.boxplot(data=df, x="Species", y="SepalWidthCm", ax=axs[0, 1], palette="Set2")
+    sns.boxplot(data=df, x="Species", y="PetalLengthCm", ax=axs[1, 0], palette="Set2")
+    sns.boxplot(data=df, x="Species", y="SepalWidthCm", ax=axs[1, 1], palette="Set2")
+    plt.show()
+
 ###### Function calls
-summaryFile()
+#summaryFile()
 #plotHistograms()
 #plotScatterplots()
 #pairPlots()
-
+plotBoxPlots()
 
