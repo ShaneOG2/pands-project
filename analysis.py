@@ -28,6 +28,8 @@ def summaryFile():
     PetalLengthBySpecies = df.groupby("Species")["PetalLengthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
     PetalWidthBySpecies = df.groupby("Species")["PetalWidthCm"].agg([np.mean, np.std, np.min, np.median, np.max])
 
+    corrMatrix = df.corr()
+
 # Opens text file named summary.txt to write to as f
     with open("Summary.txt", "w") as f:
         
@@ -45,6 +47,8 @@ def summaryFile():
         f.write(("Sepal Width:\n\n")+(str(SepalWidthBySpecies)+('\n\n')))
         f.write(("Petal Length:\n\n")+(str(PetalLengthBySpecies)+('\n\n')))
         f.write(("Petal Width:\n\n")+(str(PetalWidthBySpecies)+('\n\n')))
+
+        f.write(("Correlation Matrix:\n\n")+(str(corrMatrix)+('\n\n')))
 
 ##### Plots Histograms
 
@@ -100,10 +104,17 @@ def plotBoxPlots():
     sns.boxplot(data=df, x="Species", y="SepalWidthCm", ax=axs[1, 1], palette="Set2")
     plt.show()
 
+def corrMatrixPlot():
+    corrMatrix = df.corr()
+    fig, ax = plt.subplots(figsize=(7, 6))
+    sns.heatmap(corrMatrix, annot = True, ax = ax, cmap="coolwarm")
+    plt.show()
+
 ###### Function calls
 #summaryFile()
 #plotHistograms()
 #plotScatterplots()
 #pairPlots()
 #plotBoxPlots()
+corrMatrixPlot()
 
