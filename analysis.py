@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 def main():
-    ##### Importing data into dataframe
+    ##### Importing data into dataframe #####
     collumnNames = ["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm", "Species"] # List of the collumn names to be added to dataframe
     df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and adds the collumn names to top
 
-    ##### Function calls
+    ##### Function calls 1 #####
     #summaryFile()
     #plotBoxPlots()
     #plotHistograms()
@@ -18,23 +18,29 @@ def main():
     #plotScatterplots()
     #corrMatrixPlot()
 
-    ##### Use df2 for machine learning work setting species to numerical values
+    ##### Use df2 for machine learning work setting species to numerical values #####
     df2 = df
     from sklearn.preprocessing import LabelEncoder
     le = LabelEncoder()
     df2["Species"] = le.fit_transform(df2["Species"])
 
+    ##### Splits data into X and Y #####
     X = df2.drop(["Species"], axis=1)
     Y = df2["Species"]
+
+    ##### Splits data into training and testing #####
+    from sklearn.model_selection import train_test_split
     x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size = 0.3)
 
-    from sklearn.linear_model import LogisticRegression
-    logreg = LogisticRegression()
-    logreg.fit(x_train,y_train)
-    
+    ##### Function calls 2 #####
 
+    #logRegAccuracy(x_train, x_test, y_train, y_test)
 
-##### Writes to summary file
+    #max_k = KNNAccuracy(x_train, x_test, y_train, y_test)
+    #KNNmodel(X, Y, max_k) # You will need to run KNNAccuracy with this function
+
+  
+##### Writes to summary file #####
 
 def summaryFile():
 
@@ -53,10 +59,10 @@ def summaryFile():
 
     corrMatrix = df.corr()
 
-# Opens text file named summary.txt to write to as f
+##### Opens text file named summary.txt to write to as f #####
     with open("Summary.txt", "w") as f:
         
-        # Writes to Summary.txt using variable above and converting them to strings using ste
+        ##### Writes to Summary.txt using variable above and converting them to strings using str #####
         f.write(("Data Summary\n\n"))
         f.write(("First 6 rows of our data:\n\n")+(str(head)+('\n\n')))
         f.write(("Number of rows and collums:\n\n")+(str(shape)+('\n\n')))
@@ -73,7 +79,7 @@ def summaryFile():
 
         f.write(("Correlation Matrix:\n\n")+(str(corrMatrix)+('\n\n')))
 
-##### Plots Boxplots
+##### Plots Boxplots #####
 
 def plotBoxPlots():
     sns.set(style="darkgrid")
@@ -86,7 +92,7 @@ def plotBoxPlots():
     sns.boxplot(data=df, x="Species", y="SepalWidthCm", ax=axs[1, 1], palette="Set2")
     plt.show()
 
-##### Plots Histograms
+##### Plots Histograms #####
 
 def plotHistograms():
     sns.set(style="darkgrid")
@@ -100,13 +106,13 @@ def plotHistograms():
     plt.show()
     #plt.savefig()
 
-##### Plots Pairplots
+##### Plots Pairplots #####
 
 def pairPlots():
     sns.pairplot(df, kind="scatter", hue="Species", markers=["o", "s", "D"], palette="Set2")
     plt.show()
 
-##### Plots Scatterplots
+##### Plots Scatterplots #####
 
 def plotScatterplots():
     sns.set(style="darkgrid")
@@ -133,7 +139,7 @@ def plotScatterplots():
     sns.lmplot(data=df, x="PetalLengthCm", y="SepalWidthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
     plt.show()
 
-##### Plots Correlation Matrix
+##### Plots Correlation Matrix #####
 
 def corrMatrixPlot():
     corrMatrix = df.corr()
@@ -141,6 +147,72 @@ def corrMatrixPlot():
     sns.heatmap(corrMatrix, annot = True, ax = ax, cmap="coolwarm")
     plt.show()
 
+##### Builds Logistic Regression Model, trains data on training data and returns model accuracy based on test data #####
+
+def logRegAccuracy(x_train, x_test, y_train, y_test):
+    from sklearn.linear_model import LogisticRegression
+    logreg = LogisticRegression()
+    logreg.fit(x_train,y_train)
+    y_pred1 = logreg.predict(x_test)
+
+    from sklearn import metrics
+    accuracy = (metrics.accuracy_score(y_test, y_pred1) * 100)
+    print("Logistic Regression Model Accuracy: ", accuracy, "%" , sep="")
+
+##### Finds the most accurate k to use for KNN model #####
+
+def KNNAccuracy(x_train, x_test, y_train, y_test):
+    from sklearn.neighbors import KNeighborsClassifier
+    scores = []
+    k_range = []
+    k_range.extend(range(1,26))
+
+    from sklearn import metrics
+    for k in k_range:
+        knn = KNeighborsClassifier(n_neighbors=k)
+        knn.fit(x_train,y_train)
+        y_pred2 = knn.predict(x_test)
+        scores.append(metrics.accuracy_score(y_test, y_pred2))
+
+    sns.set(style="darkgrid")
+    plt.plot(k_range, scores)
+    plt.xlabel("Value of K for KNN")
+    plt.ylabel("Accurancy Scores")
+    plt.show()
+
+    k_range=[str(x) for x in k_range]
+    zip_iterator = zip(k_range, scores)
+    scoresDict = dict(zip_iterator)
+
+    max_k = max(scoresDict, key=scoresDict.get)
+    accuracy=scoresDict[max_k]*100
+    print("KNN Model Accuracy where k=", max_k, ": ", accuracy, "%", sep="")
+    return max_k
+
+##### Builds KNN model where k has the highest accuracy in KNNAccuracy(). #####
+##### Asks user to input Iris measurements and returns prediction #####
+
+def KNNmodel(X, Y, max_k):
+    from sklearn.neighbors import KNeighborsClassifier
+    k=int(max_k)
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X, Y)
+
+    print("Please input the measurements of the Iris:")
+    sl = int(input("Sepal Length in cm: "))
+    sw = int(input("Sepal Width in cm: "))
+    pl = int(input("Petal Length in cm: "))
+    pw = int(input("Petal Width in cm: "))
+    X_new = [sl, sw, pl, pw]
+
+    prediction=knn.predict([X_new])
+
+    if prediction[0]==0:
+        print("Based on your inputted measurements, this is a Setosa.")
+    elif prediction[0]==1:
+        print("Based on your inputted measurements, this is a Versicolor.")
+    else:
+        print("Based on your inputted measurements, this is a Virginica.")
 
 if __name__ == "__main__":
     main()
