@@ -4,6 +4,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 
 import seaborn as sns
+from fpdf import FPDF as fp
+from datetime import datetime, timedelta
+import os
 
 def main():
     ##### Importing data into dataframe #####
@@ -11,7 +14,7 @@ def main():
     df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and adds the collumn names to top
 
     ##### Function calls 1 #####
-    #summaryFile()
+    summaryFile(df)
     #plotBoxPlots()
     #plotHistograms()
     #pairPlots()
@@ -39,10 +42,12 @@ def main():
     #max_k = KNNAccuracy(x_train, x_test, y_train, y_test)
     #KNNmodel(X, Y, max_k) # You will need to run KNNAccuracy with this function
 
+    pdfReport(df=df)
+
   
 ##### Writes to summary file #####
 
-def summaryFile():
+def summaryFile(df):
 
     head = df.head() 
     shape = df.shape 
