@@ -4,9 +4,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt 
 import seaborn as sns
-from fpdf import FPDF as fp
-from datetime import datetime, timedelta
-import os
+import os 
 
 def main():
     ##### Importing data into dataframe #####
@@ -14,12 +12,13 @@ def main():
     df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and adds the collumn names to top
 
     ##### Function calls 1 #####
-    summaryFile(df)
-    #plotBoxPlots()
-    #plotHistograms()
-    #pairPlots()
-    #plotScatterplots()
-    #corrMatrixPlot()
+    #os.mkdir("Plots") # Creates folder "Plots" - use once and comment out
+    #summaryFile(df)
+    #plotBoxPlots(df)
+    #plotHistograms(df)
+    #pairPlots(df)
+    #plotScatterplots(df)
+    #corrMatrixPlot(df)
 
     ##### Use df2 for machine learning work setting species to numerical values #####
     df2 = df
@@ -39,11 +38,10 @@ def main():
 
     #logRegAccuracy(x_train, x_test, y_train, y_test)
 
+    ##### Function calls 3 #####
+
     #max_k = KNNAccuracy(x_train, x_test, y_train, y_test)
     #KNNmodel(X, Y, max_k) # You will need to run KNNAccuracy with this function
-
-    pdfReport(df=df)
-
   
 ##### Writes to summary file #####
 
@@ -86,7 +84,7 @@ def summaryFile(df):
 
 ##### Plots Boxplots #####
 
-def plotBoxPlots():
+def plotBoxPlots(df):
     sns.set(style="darkgrid")
 
     fig, axs = plt.subplots(2, 2, figsize=(12, 12))
@@ -95,11 +93,13 @@ def plotBoxPlots():
     sns.boxplot(data=df, x="Species", y="SepalWidthCm", ax=axs[0, 1], palette="Set2")
     sns.boxplot(data=df, x="Species", y="PetalLengthCm", ax=axs[1, 0], palette="Set2")
     sns.boxplot(data=df, x="Species", y="SepalWidthCm", ax=axs[1, 1], palette="Set2")
-    plt.show()
+    
+    plt.savefig("Plots/boxplots.png")
+    #plt.show()
 
 ##### Plots Histograms #####
 
-def plotHistograms():
+def plotHistograms(df):
     sns.set(style="darkgrid")
 
     fig, axs = plt.subplots(2, 2, figsize=(12, 12))
@@ -108,49 +108,36 @@ def plotHistograms():
     sns.histplot(data=df, x="SepalWidthCm", kde=True, ax=axs[0, 1], hue="Species", palette="Set2")
     sns.histplot(data=df, x="PetalLengthCm", kde=True, ax=axs[1, 0], hue="Species", palette="Set2")
     sns.histplot(data=df, x="PetalWidthCm", kde=True, ax=axs[1, 1], hue="Species", palette="Set2")
-    plt.show()
-    #plt.savefig()
+    
+    plt.savefig("Plots/histograms.png")
+    #plt.show()
 
 ##### Plots Pairplots #####
 
-def pairPlots():
+def pairPlots(df):
     sns.pairplot(df, kind="scatter", hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
+    
+    plt.savefig("Plots/pairplots.png")
+    #plt.show()
 
 ##### Plots Scatterplots #####
 
-def plotScatterplots():
+def plotScatterplots(df):
     sns.set(style="darkgrid")
-    sns.lmplot(data=df, x="SepalLengthCm", y="SepalWidthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
-
-    sns.set(style="darkgrid")
-    sns.lmplot(data=df, x="SepalLengthCm", y="PetalLengthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
-
-    sns.set(style="darkgrid")
-    sns.lmplot(data=df, x="SepalLengthCm", y="PetalWidthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
-
-    sns.set(style="darkgrid")
-    sns.lmplot(data=df, x="SepalWidthCm", y="PetalLengthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
-
-    sns.set(style="darkgrid")
-    sns.lmplot(data=df, x="SepalWidthCm", y="PetalLengthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
-
-    sns.set(style="darkgrid")
-    sns.lmplot(data=df, x="PetalLengthCm", y="SepalWidthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
-    plt.show()
+    sns.lmplot(data=df, x="PetalWidthCm", y="PetalLengthCm", fit_reg=False, hue="Species", markers=["o", "s", "D"], palette="Set2")
+    
+    plt.savefig("Plots/Petal-WidthxLength.png")
+    #plt.show()
 
 ##### Plots Correlation Matrix #####
 
-def corrMatrixPlot():
+def corrMatrixPlot(df):
     corrMatrix = df.corr()
     fig, ax = plt.subplots(figsize=(7, 6))
     sns.heatmap(corrMatrix, annot = True, ax = ax, cmap="coolwarm")
-    plt.show()
+    
+    plt.savefig("Plots/CorrelationMatrix.png")
+    #plt.show()
 
 ##### Builds Logistic Regression Model, trains data on training data and returns model accuracy based on test data #####
 
