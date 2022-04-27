@@ -11,14 +11,13 @@ def main():
     collumnNames = ["SepalLengthCm", "SepalWidthCm", "PetalLengthCm", "PetalWidthCm", "Species"] # List of the collumn names to be added to dataframe
     df = pd.read_csv('iris.txt', names = collumnNames) # Reads in dataset as df and adds the collumn names to top
 
-    ##### Function calls 1 #####
-    #os.mkdir("Plots") # Creates folder "Plots" - use once and comment out
-    #summaryFile(df)
-    #plotBoxPlots(df)
-    #plotHistograms(df)
-    #pairPlots(df)
-    #plotScatterplots(df)
-    #corrMatrixPlot(df)
+    os.mkdir("Plots") # Creates folder "Plots" - use once and comment out
+    summaryFile(df)
+    plotBoxPlots(df)
+    plotHistograms(df)
+    pairPlots(df)
+    plotScatterplots(df)
+    corrMatrixPlot(df)
 
     ##### Use df2 for machine learning work setting species to numerical values #####
     df2 = df
@@ -34,14 +33,11 @@ def main():
     from sklearn.model_selection import train_test_split
     x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size = 0.3)
 
-    ##### Function calls 2 #####
 
-    #logRegAccuracy(x_train, x_test, y_train, y_test)
+    logRegAccuracy(x_train, x_test, y_train, y_test)
 
-    ##### Function calls 3 #####
-
-    #max_k = KNNAccuracy(x_train, x_test, y_train, y_test)
-    #KNNmodel(X, Y, max_k) # You will need to run KNNAccuracy with this function
+    max_k = KNNAccuracy(x_train, x_test, y_train, y_test)
+    KNNmodel(X, Y, max_k) # You will need to run KNNAccuracy with this function
   
 ##### Writes to summary file #####
 

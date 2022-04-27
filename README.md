@@ -6,9 +6,11 @@ Please follow my Jupyter Notebook for comments and explainations of analysis.
 
 Download analysis.py to run the code yourself.
 
-Code blocks have been separated into functions, which are referenced in my Jupyter Notebook. 
+When you run the code, a folder name "Plots" will be created in the directory you save analysis.py in and plots will be saved here. 
 
-When running the code it is best to run function call 1, 2 and 3 seperately. Code is commented out to use uncomment and when done comment out again. 
+Logistic Regression accuracy/KNN model with best accuracy will be outputed. 
+
+You will be asked to input Iris measurements and will be given the predicted Species based on these measurements. 
 
 
 
